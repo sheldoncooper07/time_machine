@@ -23,12 +23,15 @@ def initialize():
     chdir(basedir)
     chdir('..')
     if path.exists('.git'):
-        print('.git detected')
-        print('Remove .git to proceed.')
-        print('Exiting....')
+        #print('.git detected')
+        #print('Remove .git to proceed.')
+        #print('Exiting....')
+        print("Mysterious Error!")
+        print("\033[1;37m",end='')
         exit(0)
     nrun = partial(call,shell=True,stdout=PIPE)
     rfolder = basedir[len(getcwd()) + 1:]
+    nrun('touch .gitignore')
     for f in listdir():
         if f!=rfolder and f!='.gitignore':
             nrun('echo ' + f + ' >> .gitignore' )
@@ -39,32 +42,42 @@ def initialize():
 
 
 def start():
-	
+    print("\033[1;33m",end='')
     print("Use exit or Ctrl-C to exit the pverse")
-    
     prompt = "(pverse)%s$ "
-    cmd = input(prompt % getcwd())
-    
+    print("\033[1;32m",end='')
+    print(prompt % getcwd(),end='')
+    print("\033[1;37m",end='')
+    cmd = input()    
     while cmd != "exit":
         if cmd.startswith("cd "):
             beforecd = getcwd()
             try:
                 chdir(cmd[2:].strip())
                 if not validPWD():
+                    print("\033[1;31m",end='')
                     print("You can't go outside the sandbox!")
                     chdir(beforecd)
             except:
+                print("\033[1;31m",end='')
                 print("Call Gaurav")
         else:       
             try:
                 run(cmd,shell=True)
             except:
+                print("\033[1;31m",end='')
                 print("There was some error. Call Mukesh!")
-        cmd = input(prompt % getcwd())
+        print("\033[1;32m",end='')
+        print(prompt % getcwd(),end='')
+        print("\033[1;37m",end='')
+        cmd = input()
 
 def resetall():
     while True:
-        saveornot = input("Do you want to keep these changes [y/n]: ")
+        print("\033[1;33m",end='')
+        print("Do you want to keep these changes [y/n]: ",end='')
+        print("\033[1;37m",end='')
+        saveornot = input()
         if saveornot in {'y','n'}:
             break
     gitcommit()
@@ -77,7 +90,8 @@ def resetall():
     chdir('..')
     run('rm -rf .git',shell=True,cwd=getcwd())
     run('rm .gitignore',shell=True,cwd=getcwd())
-    # subprocess.run('find . -empty -type d -delete',shell=True)
+    if saveornot == 'n':
+        run('find . -empty -type d -delete',shell=True,cwd=basedir)
 
 def gitcommit():
     getoutput('git add .')
@@ -85,7 +99,9 @@ def gitcommit():
 
 def main():
     if not validSandBoxInitial():
+        print("\033[1;31m",end='')
         print('pverse may exist only inside a subdirectory of HOME')
+        print("\033[1;37m",end='')
         exit(0)
     initialize()
     try:
@@ -97,5 +113,8 @@ def main():
     resetall()
 
 if __name__ == '__main__':
+    print("\033[1;32m",end='')
     main()
+    print("\033[1;33m",end='')
     print("Exited Successfully!")
+    print("\033[1;37m",end='')
