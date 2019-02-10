@@ -6,11 +6,15 @@ from sys import exit
 HOME = environ.get('HOME')
 PWD = environ.get('PWD')
 basedir = PWD
-
+mmr = ''
 def validSandBoxInitial():
+    global mmr
     PWD = environ.get('PWD')
     if not (PWD.startswith(HOME) and PWD!=HOME):
         return False
+    chdir('..')
+    mmr = getcwd()
+    chdir(basedir)
     return True
 
 def validPWD():
@@ -86,11 +90,11 @@ def resetall():
         # print(initial_commit)
         getoutput('git reset --hard ' + initial_commit)
         # subprocess.check_output(['rm', '-rf', '.git'])
-    chdir(basedir)
-    chdir('..')
+    
+    chdir(mmr)
     run('rm -rf .git',shell=True,cwd=getcwd())
     run('rm .gitignore',shell=True,cwd=getcwd())
-    if saveornot == 'n':
+    if saveornot == 'n' and path.exists(basedir):
         run('find . -empty -type d -delete',shell=True,cwd=basedir)
 
 def gitcommit():
