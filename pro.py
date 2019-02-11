@@ -96,6 +96,8 @@ def resetall():
     run('rm .gitignore',shell=True,cwd=getcwd())
     if saveornot == 'n' and path.exists(basedir):
         run('find . -empty -type d -delete',shell=True,cwd=basedir)
+    if not path.exists(basedir):
+        run('mkdir '+ basedir,shell=True,cwd=mmr)        
 
 def gitcommit():
     getoutput('git add .')
