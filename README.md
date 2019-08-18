@@ -21,7 +21,7 @@ If you type **n** all thing will be same as before entering in this terminal.
 **Macro Processor**  
 
 **macro.py** file contains code of macro processor.  
->To run this type: **python macro.p**
+>To run this type: **python macro.py**
 
 Make sure macro.py and macro.txt are in same folder  
 it process code line by line and define macros for macro calls.   
