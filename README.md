@@ -27,3 +27,4 @@ Make sure macro.py and macro.txt are in same folder
 it process code line by line and define macros for macro calls.   
 To study more about macro [follow](https://www.computerhope.com/jargon/m/macro.htm)
 
+fsbuf
